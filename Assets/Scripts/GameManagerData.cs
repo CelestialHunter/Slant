@@ -11,4 +11,10 @@ public class GameManagerData : ScriptableObject
     public AudioClip gameMusic;
     public AudioClip collideDeathSound;
     public AudioClip fallDeathSound;
+
+    public Sprite soundOn;
+    public Sprite soundOff;
+
+    public GameObject bigEnv;
+    public GameObject smallEnv;
 }

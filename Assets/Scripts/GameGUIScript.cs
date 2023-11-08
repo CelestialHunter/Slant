@@ -66,6 +66,8 @@ public class GameGUIScript : MonoBehaviour
         Time.timeScale = 0;
         PauseMenu.SetActive(true);
         GameGUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Resume()
@@ -73,6 +75,8 @@ public class GameGUIScript : MonoBehaviour
         Time.timeScale = 1;
         PauseMenu.SetActive(false);
         GameGUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     IEnumerator GameOver()
@@ -81,6 +85,8 @@ public class GameGUIScript : MonoBehaviour
         finalScoreText.text = "Final score: " + scoreText.text;
         GameGUI.SetActive(false);
         EndMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }    
 
     public void Replay()

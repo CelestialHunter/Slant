@@ -6,7 +6,8 @@ public class SpeedScript : MonoBehaviour
 {
     public float scrollSpeed = -5f;
 
-    private static float speed = 0f;
+    [SerializeField]
+    public static float speed = 100f;
 
     [SerializeField]
     private float speedStep = 100f;

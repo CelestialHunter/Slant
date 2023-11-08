@@ -13,13 +13,18 @@ public class GameManager : MonoBehaviour
 
     public GameGUIScript gui;
 
-    private List<GameObject> slopeQueue;
+    private Environment env;
 
-    [SerializeField]
-    private Vector3 startingPosition = new Vector3(0, -5, 35);
+    private List<GameObject> slopeQueue;
     
     [SerializeField]
-    private Vector3 nextSlopeOffset = new Vector3(0, -8, 10);
+    private Vector3 nextSlopeOffset = new Vector3(0, -5, 10);
+
+    [SerializeField]
+    private float xLeftLimit = -3.5f;
+
+    [SerializeField]
+    private float xRightLimit = 3.5f;
 
     private Vector3 nextSlopePosition = new Vector3(0, -5, 40);
 
@@ -28,12 +33,14 @@ public class GameManager : MonoBehaviour
     private int score = 0;
 
     private bool gamePaused = false;
+    private bool soundOn = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        initialGeneration(startingPosition);
+        env = GetComponent<Environment>();
+        initialGeneration();
 
         // start playing game music
         audioSource = GetComponent<AudioSource>();
@@ -42,6 +49,10 @@ public class GameManager : MonoBehaviour
         audioSource.Play();
 
         gui.StartCoroutine("initGui");
+        
+        
+
+        SpeedScript.speed = 100f;
     }
 
     // Update is called once per frame
@@ -67,11 +78,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void initialGeneration(Vector3 startPosition)
+    public void initialGeneration()
     {
-        nextSlopePosition = startPosition;
-
         slopeQueue = new List<GameObject>();
+        slopeQueue.Add(GameObject.Find("StartSlope"));
+        computeNextPosition();
+        
         GameObject slope = Instantiate(gmData.slopes[Random.Range(0, gmData.slopes.Length)], nextSlopePosition, Quaternion.identity);
         // instantiate deathzone under slope as child of slope
         Instantiate(gmData.deathZone,
@@ -92,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject slope = slopeQueue[slopeQueue.Count - 1];
         nextSlopePosition = slope.transform.Find("endPoint").transform.position + nextSlopeOffset;
+        nextSlopePosition.x = Random.Range(xLeftLimit, xRightLimit);
     }
     
     private void generateNewSlope(Vector3 playerPos)
@@ -105,7 +118,7 @@ public class GameManager : MonoBehaviour
         // generate new slope
         addNewSlope();
 
-        scoreGiven = false;
+        scoreGiven = false;        
     }
 
     private void addNewSlope()
@@ -121,6 +134,7 @@ public class GameManager : MonoBehaviour
                     new Vector3(slope.transform.position.x, slope.transform.Find("endPoint").transform.position.y - 5, slope.transform.position.z),
                     Quaternion.identity,
                     slope.transform);
+        env.generateNewEnv(slope.transform.position.z, slope.transform.position.y);
         slopeQueue.Add(slope);
         computeNextPosition();
     }
@@ -136,6 +150,8 @@ public class GameManager : MonoBehaviour
             scoreGiven = true;
 
             gui.setScore(score);
+
+            env.pruneEnv(playerPos);
         }
     }
 
@@ -183,5 +199,21 @@ public class GameManager : MonoBehaviour
     {
         // call upon GUI to show speed up message
         gui.StartCoroutine("SpeedUp");
+    }
+
+    public void ToggleSound(UnityEngine.UI.Button button)
+    {
+        if(soundOn)
+        {
+            soundOn = false;
+            audioSource.volume = 0;
+            button.image.sprite = gmData.soundOff;
+        }
+        else
+        {
+            soundOn = true;
+            audioSource.volume = 1;
+            button.image.sprite = gmData.soundOn;
+        }
     }
 }
