@@ -6,8 +6,11 @@ public class SpeedScript : MonoBehaviour
 {
     public float scrollSpeed = -5f;
 
-    private float speed = 50f;
+    private static float speed = 0f;
 
+    [SerializeField]
+    private float speedStep = 100f;
+    
     // Update is called once per frame
     void Update()
     {
@@ -18,7 +21,7 @@ public class SpeedScript : MonoBehaviour
 
     public float getSpeed()
     {
+        speed += speedStep;
         return speed;
-        speed += 50f;
     }
 }

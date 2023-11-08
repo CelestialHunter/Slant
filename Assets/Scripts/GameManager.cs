@@ -11,9 +11,7 @@ public class GameManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    // GUI system => score, speed, death
-
-    // camera system => death
+    public GameGUIScript gui;
 
     private List<GameObject> slopeQueue;
 
@@ -21,13 +19,15 @@ public class GameManager : MonoBehaviour
     private Vector3 startingPosition = new Vector3(0, -5, 35);
     
     [SerializeField]
-    private Vector3 nextSlopeOffset = new Vector3(0, -4, 10);
+    private Vector3 nextSlopeOffset = new Vector3(0, -8, 10);
 
     private Vector3 nextSlopePosition = new Vector3(0, -5, 40);
 
 
     private bool scoreGiven = false;
     private int score = 0;
+
+    private bool gamePaused = false;
 
 
     // Start is called before the first frame update
@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
         audioSource.clip = gmData.gameMusic;
         audioSource.loop = true;
         audioSource.Play();
+
+        gui.StartCoroutine("initGui");
     }
 
     // Update is called once per frame
@@ -49,6 +51,20 @@ public class GameManager : MonoBehaviour
         Vector3 playerPos = player.gameObject.transform.position;
         generateNewSlope(playerPos);
         increaseScore(playerPos);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gamePaused)
+            {
+                gui.Resume();
+                gamePaused = false;
+            }
+            else
+            {
+                gui.Pause();
+                gamePaused = true;
+            }
+        }
     }
 
     public void initialGeneration(Vector3 startPosition)
@@ -80,7 +96,7 @@ public class GameManager : MonoBehaviour
     
     private void generateNewSlope(Vector3 playerPos)
     {
-        if (playerPos.z < slopeQueue[0].transform.Find("endPoint").transform.position.z) return;
+        if (playerPos.z < slopeQueue[0].transform.Find("endPoint").transform.position.z + 10) return;
         
         // destroy first slope
         Destroy(slopeQueue[0]);
@@ -118,6 +134,8 @@ public class GameManager : MonoBehaviour
             score++;
             Debug.Log(score);
             scoreGiven = true;
+
+            gui.setScore(score);
         }
     }
 
@@ -152,6 +170,7 @@ public class GameManager : MonoBehaviour
         }
 
         audioSource.Play();
+        gui.StartCoroutine("GameOver");
     }
 
     IEnumerator DestroyPlayer()
@@ -163,5 +182,6 @@ public class GameManager : MonoBehaviour
     public void SpeedUp()
     {
         // call upon GUI to show speed up message
+        gui.StartCoroutine("SpeedUp");
     }
 }
