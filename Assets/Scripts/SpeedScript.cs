@@ -6,7 +6,7 @@ public class SpeedScript : MonoBehaviour
 {
     public float scrollSpeed = -5f;
 
-    public float speed = 50f;
+    private float speed = 50f;
 
     // Update is called once per frame
     void Update()
@@ -14,5 +14,11 @@ public class SpeedScript : MonoBehaviour
         float scrollY = Time.deltaTime * scrollSpeed;
 
         GetComponent<Renderer>().material.mainTextureOffset += new Vector2(0f, scrollY);
+    }
+
+    public float getSpeed()
+    {
+        return speed;
+        speed += 50f;
     }
 }

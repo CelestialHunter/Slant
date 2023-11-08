@@ -22,7 +22,7 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!following) return;
+        if (!following || player == null) return;
         
         offset = Vector3.Lerp(minOffset, maxOffset, Mathf.SmoothStep(0, 1, 1 - 30f / player.GetComponent<PlayerControl>().currentSpeed));
         transform.position = player.position + offset;

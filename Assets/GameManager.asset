@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 5720191615232126660, guid: 8a93625e5b886fe4b856e1a1dfa231c9, type: 3}
   - {fileID: 8614175063586996356, guid: 0f8cba5759b0fd8419055d7a8e94a621, type: 3}
   - {fileID: 966221249504874935, guid: 51f8e6baca9a8af4d870e7079c2245db, type: 3}
+  - {fileID: 7943987746593344723, guid: b25a274f23a8e6d48bf069e697cd7d14, type: 3}
+  - {fileID: 4662414290684772675, guid: 42195acd4a0ccc04e9329d16c2a686e3, type: 3}
   deathZone: {fileID: 7341836391805337505, guid: 9e5d60f84fda3c647a10c4c47f9fb192,
     type: 3}
   gameMusic: {fileID: 8300000, guid: e12579250f657014a91b03c0f1ac0334, type: 3}

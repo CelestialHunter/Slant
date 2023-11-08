@@ -46,7 +46,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (other.gameObject.tag == "Speed")
         {
-            float force = other.gameObject.GetComponent<SpeedScript>().speed;
+            GameObject.Find("GameManager").GetComponent<GameManager>().SpeedUp();
+            float force = other.gameObject.GetComponent<SpeedScript>().getSpeed();
             SpeedUp(force);
             Debug.Log("Speed up!");
         }

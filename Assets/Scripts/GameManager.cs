@@ -146,17 +146,22 @@ public class GameManager : MonoBehaviour
 
             // stop camera follow
             cam.StopFollowing();
+
+            // wait 10 seconds, then destroy player
+            StartCoroutine(DestroyPlayer());
         }
 
         audioSource.Play();
-
-        // wait 10 seconds, then destroy player
-        StartCoroutine(DestroyPlayer());
     }
 
     IEnumerator DestroyPlayer()
     {
         yield return new WaitForSeconds(10);
         Destroy(player.gameObject);
-    }    
+    }
+    
+    public void SpeedUp()
+    {
+        // call upon GUI to show speed up message
+    }
 }
