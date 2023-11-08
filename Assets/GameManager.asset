@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e699947d1b469d64d81c374b6faa82e7, type: 3}
+  m_Name: GameManager
+  m_EditorClassIdentifier: 
+  slopes:
+  - {fileID: 5720191615232126660, guid: 8a93625e5b886fe4b856e1a1dfa231c9, type: 3}
+  - {fileID: 8614175063586996356, guid: 0f8cba5759b0fd8419055d7a8e94a621, type: 3}
+  - {fileID: 966221249504874935, guid: 51f8e6baca9a8af4d870e7079c2245db, type: 3}
+  deathZone: {fileID: 7341836391805337505, guid: 9e5d60f84fda3c647a10c4c47f9fb192,
+    type: 3}
+  gameMusic: {fileID: 8300000, guid: e12579250f657014a91b03c0f1ac0334, type: 3}
+  collideDeathSound: {fileID: 8300000, guid: 40a1490d7b019d54fa0cb5ee28c49d96, type: 3}
+  fallDeathSound: {fileID: 8300000, guid: 3c19194a688b65f4187e97c9166519ee, type: 3}

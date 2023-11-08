@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    Rigidbody rb;
-
+    private Rigidbody rb;
     
     public float currentSpeed;
 
     [SerializeField]
-    public float startSpeed = 30f;
+    public float impulseSpeed = 30f;
 
     [SerializeField]
     private float pushForce = 10f;
@@ -19,8 +18,6 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        rb.AddForce(Vector3.forward * startSpeed, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -32,7 +29,7 @@ public class PlayerControl : MonoBehaviour
 
         float sidePush = Input.GetAxis("Horizontal");
 
-        rb.AddForce(Vector3.right * sidePush * pushForce, ForceMode.Force);
+        rb.AddForce(Vector3.right * sidePush * pushForce, ForceMode.Acceleration);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -41,6 +38,26 @@ public class PlayerControl : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             Destroy(rb);
+            GameObject.Find("GameManager").GetComponent<GameManager>().Death(0);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Speed")
+        {
+            float force = other.gameObject.GetComponent<SpeedScript>().speed;
+            SpeedUp(force);
+            Debug.Log("Speed up!");
+        }
+        else if (other.gameObject.tag == "Death")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().Death(1);
+        }
+    }
+
+    public void SpeedUp(float force)
+    {
+        rb.AddForce(Vector3.forward * force, ForceMode.Acceleration);
     }
 }
